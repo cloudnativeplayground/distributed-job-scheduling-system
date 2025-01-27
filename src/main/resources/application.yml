@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: distributed-job-scheduling-system
+
+  # Spring Batch Configuration
+  batch:
+    job:
+      enabled: true
+    jdbc:
+      initialize-schema: ALWAYS
+
+  # DataSource configuration for MySQL
+  datasource:
+    url: jdbc:mysql://localhost:3306/job_scheduler_db?useSSL=false&serverTimezone=UTC
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+
+  # RabbitMQ configuration
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        concurrency: 3
+        max-concurrency: 10
+
+  # Logging Configuration
+  logging:
+    level:
+      root: INFO
+      com.cloudnativeplayground.scheduler: DEBUG
+
+  # Job Scheduling Configuration
+  scheduler:
+    task:
+      retry:
+        attempts: 3
+        delay: 5000
+    log:
+      enable-detailed-logging: true
+
+
+  main:
+    allow-circular-references: true
